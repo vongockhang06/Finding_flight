@@ -1,12 +1,5 @@
-# Effect of weather on bus route 
+# Finding Flight
 
-## Data Architecture
+## Sources: Aviationstack, tdx
 
-### About CWA weather
-- Endpoint: ```"O-A0002-001"```
-
-### About TDX 
-- Endpoint: 
-
-## Question the final dashboard should answer
 
