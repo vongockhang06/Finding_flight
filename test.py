@@ -8,8 +8,11 @@ client_secret = os.getenv('CLIENTSECRET')
 client_id = os.getenv('CLIENTID')
 
 auth_url="https://tdx.transportdata.tw/auth/realms/TDXConnect/protocol/openid-connect/token"
-url = "https://tdx.transportdata.tw/api/basic/v2/Air/Airport?$top=30&$format=JSON"
-
+url = "https://tdx.transportdata.tw/api/basic/v2/Air/Airport"
+params={
+    'format':'JSON',
+    'top':1
+}
 class Auth():
 
     def __init__(self, client_id, client_secret):
@@ -51,9 +54,9 @@ if __name__ == '__main__':
         a = Auth(client_id, client_secret)
         auth_response = requests.post(auth_url, a.get_auth_header())
         d = data(client_id, client_secret, auth_response)
-        data_response = requests.get(url, headers=d.get_data_header())
-    print(auth_response)
-    pprint(auth_response.text)
+        data_response = requests.get(url, headers=d.get_data_header(),params=params)
+    #print(auth_response)
+    #pprint(auth_response.text)
     print(data_response)
     pprint(data_response.text)
 
