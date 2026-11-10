@@ -7,8 +7,13 @@ dotenv.load_dotenv()
 client_secret = os.getenv('CLIENTSECRET')
 client_id = os.getenv('CLIENTID')
 
+
 auth_url="https://tdx.transportdata.tw/auth/realms/TDXConnect/protocol/openid-connect/token"
-url = "https://tdx.transportdata.tw/api/basic/v2/Air/Airport"
+base_url='https://tdx.transportdata.tw/api/basic/'
+endpoint = {
+    'airport':"v2/Air/Airport",
+    'fids_depart': 'v2/FIDS/Airport/Departure/RMQ'
+}
 params={
     'format':'JSON',
     'top':1
@@ -49,12 +54,14 @@ class data():
 if __name__ == '__main__':
     try:
         d = data(client_id, client_secret, auth_response)
-        data_response = requests.get(url, headers=d.get_data_header())
+        data_response = requests.get(base_url+endpoint['fids_depart'], headers=d.get_data_header())
+        print(base_url+endpoint['fids_depart'])
     except:
         a = Auth(client_id, client_secret)
         auth_response = requests.post(auth_url, a.get_auth_header())
         d = data(client_id, client_secret, auth_response)
-        data_response = requests.get(url, headers=d.get_data_header(),params=params)
+        data_response = requests.get(base_url+endpoint['fids_depart'], headers=d.get_data_header(),params=params)
+        print(base_url+endpoint['fids_depart'])
     #print(auth_response)
     #pprint(auth_response.text)
     print(data_response)
