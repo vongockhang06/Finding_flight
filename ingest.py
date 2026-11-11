@@ -10,13 +10,17 @@ client_id = os.getenv('CLIENTID')
 
 auth_url="https://tdx.transportdata.tw/auth/realms/TDXConnect/protocol/openid-connect/token"
 base_url='https://tdx.transportdata.tw/api/basic/'
-endpoint = {
-    'airport':"v2/Air/Airport",
-    'fids_depart': 'v2/FIDS/Airport/Departure/RMQ'
+iata='RMQ'
+endpoints = {
+    'airport': 'v2/Air/Airport/'+iata,
+    'fids_depart': '/v2/Air/FIDS/Airport/Departure/'+iata,
+    'fids_arrival': '/v2/Air/FIDS/Airport/Arrival/'+iata,
+    'airline':'/v2/Air/Airline',
+    'general_schedule': '/v2/Air/GeneralSchedule/Domestic'
 }
 params={
     'format':'JSON',
-    'top':1
+    'top':1,
 }
 class Auth():
 
@@ -53,17 +57,24 @@ class data():
 
 if __name__ == '__main__':
     try:
-        d = data(client_id, client_secret, auth_response)
-        data_response = requests.get(base_url+endpoint['fids_depart'], headers=d.get_data_header())
-        print(base_url+endpoint['fids_depart'])
+        for name in endpoints:
+            if name=='general_schedule':
+                params['$filter']="DepartureAirportID eq 'RMQ' or ArrivalAirportID eq 'RMQ'"
+            d = data(client_id, client_secret, auth_response)
+            data_response = requests.get(base_url+endpoints[name], headers=d.get_data_header(),params=params)
+            print(f'================{name}===================')
+            print(data_response)
+            pprint(data_response.text)
     except:
         a = Auth(client_id, client_secret)
         auth_response = requests.post(auth_url, a.get_auth_header())
-        d = data(client_id, client_secret, auth_response)
-        data_response = requests.get(base_url+endpoint['fids_depart'], headers=d.get_data_header(),params=params)
-        print(base_url+endpoint['fids_depart'])
-    #print(auth_response)
-    #pprint(auth_response.text)
-    print(data_response)
-    pprint(data_response.text)
+        for name in endpoints:
+            if name=='general_schedule':
+                params['$filter']="DepartureAirportID eq 'RMQ' or ArrivalAirportID eq 'RMQ'"
+            d = data(client_id, client_secret, auth_response)
+            data_response = requests.get(base_url+endpoints[name], headers=d.get_data_header(),params=params)
+            print(f'================{name}===================')
+            print(data_response)
+            pprint(data_response.text)
+    
 
