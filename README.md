@@ -10,7 +10,7 @@
 
 ## Workflow
 
-![Data architecture](./workflow.drawio.png)
+![Data architecture](./workflow.png)
 
 
 
