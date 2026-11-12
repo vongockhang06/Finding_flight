@@ -3,23 +3,28 @@ endpoints:
     path: 'v2/Air/Airport/RMQ'
     params:
       format: 'JSON'
+    group: weekly
   fids_depart: 
-    path: '/v2/Air/FIDS/Airport/Departure/RMQ'
+    path: 'v2/Air/FIDS/Airport/Departure/RMQ'
     params:
       format: 'JSON'
       top: 30
+    group: live
   fids_arrival: 
-    path: '/v2/Air/FIDS/Airport/Arrival/RMQ'
+    path: 'v2/Air/FIDS/Airport/Arrival/RMQ'
     params:
       format: 'JSON'
       top: 30
+    group: live
   airline:
-    path: '/v2/Air/Airline'
+    path: 'v2/Air/Airline'
     params:
       format: 'JSON'
+    group: weekly
   general_schedule: 
-    path: '/v2/Air/GeneralSchedule/Domestic'
+    path: 'v2/Air/GeneralSchedule/Domestic'
     params:
       format: 'JSON'
       top: 30
       $filter: "DepartureAirportID eq 'RMQ' or ArrivalAirportID eq 'RMQ'"
+    group: daily
