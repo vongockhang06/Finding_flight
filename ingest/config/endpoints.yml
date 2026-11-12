@@ -1,0 +1,25 @@
+endpoints:
+  airport: 
+    path: 'v2/Air/Airport/RMQ'
+    params:
+      format: 'JSON'
+  fids_depart: 
+    path: '/v2/Air/FIDS/Airport/Departure/RMQ'
+    params:
+      format: 'JSON'
+      top: 30
+  fids_arrival: 
+    path: '/v2/Air/FIDS/Airport/Arrival/RMQ'
+    params:
+      format: 'JSON'
+      top: 30
+  airline:
+    path: '/v2/Air/Airline'
+    params:
+      format: 'JSON'
+  general_schedule: 
+    path: '/v2/Air/GeneralSchedule/Domestic'
+    params:
+      format: 'JSON'
+      top: 30
+      $filter: "DepartureAirportID eq 'RMQ' or ArrivalAirportID eq 'RMQ'"
